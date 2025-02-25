@@ -1,0 +1,92 @@
+body {
+    margin: 0; /* Remove default body margin */
+}
+.container {
+    display: flex;
+    justify-content: flex-start; /* Align items to the left */
+    align-items: center; /* Center items vertically */
+    height: 100vh;
+    background-color: transparent; /* No background color */
+    font-family: Arial, sans-serif;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.card {
+    background-color: white; /* Card background color */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 700px; /* Adjusted width of the card */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+p {
+    font-size: 1em;
+    margin-bottom: 1.5em;
+    color: #555;
+}
+.button-container {
+    display: flex;
+    flex-direction: row; /* Arrange items in a row */
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1em; /* Adjusted margin to be more compact */
+}
+.new-meeting {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #ff2e63;
+    color: white;
+    border: none;
+    border-radius: 50px; /* Make the button more circular */
+}
+.new-meeting:hover {
+    background-color: #de0505;
+}
+.separator {
+    height: 40px; /* Height of the separator line */
+    border-left: 2px solid #ccc; /* Style of the separator line */
+    margin: 0 10px; /* Margin around the separator line */
+}
+.join-room-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.join-room-container input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    box-sizing: border-box;
+}
+.join-room {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: transparent; /* No background color */
+    color: #ff2e63;
+    border: none;
+    border-radius: 5px;
+}
+.join-room:hover {
+    background-color: #e0e0e0; /* Slight background color change on hover */
+}
+a {
+    margin-top: 20px;
+    color: #4285f4;
+    text-decoration: none;
+    font-size: 1em;
+}
+a:hover {
+    text-decoration: underline;
+}

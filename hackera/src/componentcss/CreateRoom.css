@@ -1,4 +1,4 @@
-/* Pop-up background */
+/* Overlay background */
 .popup-overlay {
     position: fixed;
     top: 0;
@@ -16,42 +16,46 @@
     background: white;
     padding: 20px;
     width: 350px;
-    text-align: center;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   }
   
-  /* Input field */
-  input {
-    width: 90%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  /* Close button ("X" mark) */
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.3s ease;
   }
   
-  /* Room type selection container */
+  .close-button:hover {
+    color: #ff3366;
+  }
+  
+  /* Room type container */
   .room-type-container {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 20px;
     margin: 15px 0;
   }
   
-  /* Room type options (bubbles) */
+  /* Room type options */
   .room-option {
     padding: 10px 20px;
     border-radius: 20px;
     border: 2px solid #ccc;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-align: center;
+    min-width: 100px;
   }
   
-  .room-option:hover {
-    background: #f1f1f1;
-  }
-  
-  /* Selected option styling */
   .room-option.selected {
     background: #ff3366;
     color: white;
@@ -59,37 +63,19 @@
     font-weight: bold;
   }
   
-  /* Buttons container */
-  .popup-buttons {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 15px;
-  }
-  
-  /* Create and close buttons */
-  .create-btn {
-    background: #28a745;
+  /* Create button */
+  .create-room-button {
+    background: #ff3366;
     color: white;
-    padding: 10px;
     border: none;
-    cursor: pointer;
+    padding: 10px 20px;
     border-radius: 5px;
-  }
-  
-  .close-btn {
-    background: #dc3545;
-    color: white;
-    padding: 10px;
-    border: none;
     cursor: pointer;
-    border-radius: 5px;
+    font-size: 16px;
+    transition: background 0.3s ease;
   }
   
-  .create-btn:hover {
-    background: #218838;
-  }
-  
-  .close-btn:hover {
-    background: #c82333;
+  .create-room-button:hover {
+    background: #ff0055;
   }
   

@@ -9,6 +9,7 @@ const Room = require("./models/Rooms");
 const { startMediasoup, getRouterRtpCapabilities, router } = require("./utils/mediasoupSetup");
 const Login =require("./components/login")
 const signin =require("./components/signin")
+const getData=require("../server/components/getData")
 
 
 
@@ -34,6 +35,7 @@ app.use(cors({
 
 app.use("/login",Login);
 app.use("/signin",signin);
+app.use("/getData",getData);
 
 
 // Initialize Mediasoup Worker

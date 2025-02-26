@@ -1,7 +1,3 @@
-
-const express=require("express");
-const login=require("./component/login")
-const signin=require("./component/signin")
 const express = require("express");
 require("dotenv").config();
 const mongoose = require("mongoose");
@@ -11,6 +7,10 @@ const socketIo = require("socket.io");
 const { nanoid } = require("nanoid");
 const Room = require("./models/Rooms");
 const { startMediasoup, getRouterRtpCapabilities, router } = require("./utils/mediasoupSetup");
+const Login =require("./components/login")
+const signin =require("./components/signin")
+
+
 
 const app = express();
 const server = http.createServer(app);
@@ -32,7 +32,8 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }))
 
-app.use("/login",login);
+app.use("/login",Login);
+app.use("/signin",signin);
 
 
 // Initialize Mediasoup Worker

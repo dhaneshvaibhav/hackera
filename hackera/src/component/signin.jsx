@@ -1,5 +1,5 @@
-import React from "react"
-import { useState } from "react";
+import React, { useState } from "react";
+
 function Signin() {
     const [user ,setUser]=useState("")
     const [rep ,setrep]=useState("")

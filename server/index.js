@@ -1,12 +1,21 @@
 const http = require("http");
 const socketIo = require("socket.io");
+
+
+const getData=require("../server/components/getData")
+
 const { startMediasoup } = require("./utils/mediasoupSetup");
 const app = require("./app");
+
 
 const server = http.createServer(app);
 const io = socketIo(server, { cors: { origin: "*" } });
 
 const PORT = process.env.PORT || 3000;
+
+
+app.use("/getData",getData);
+
 
 // Routes
 app.use("/login", require("./components/login"));

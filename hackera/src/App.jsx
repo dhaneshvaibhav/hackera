@@ -4,6 +4,7 @@ import Login from './component/loginpage';
 import Signin from './component/signin';
 import Navbar from './component/navbar';
 import Home from './component/home';
+import Profile from './component/profile';
 
 
 
@@ -29,7 +30,16 @@ function App() {
         </>
       ),
     },
+    
     {
+      path: '/profile',
+      element: (
+        <>
+          <Navbar />
+          <Profile />
+        </>
+      ),
+    },{
       path: '/login',
       element: (
         <>

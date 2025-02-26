@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const UserInfo = require("../schema/userinfo");
+const UserInfo = require("../models/userinfo");
 
 const router = express.Router();
 
@@ -28,14 +28,13 @@ router.post("/", async (req, res) => {
     }
 
     // Hash Password Before Saving
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    
 
     console.log("Saving new user:", email);
     const newUser = new UserInfo({
       name,
       email,
-      password: hashedPassword, // Store the hashed password
+      password, // Store the hashed password
       isVerified: true,
     });
 

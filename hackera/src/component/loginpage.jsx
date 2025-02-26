@@ -6,7 +6,47 @@ import "../componentcss/login.css";
 function Login () {
     const [email,setEmail]=useState("")
 const [password,setPassword]=useState("")
-    return ( <>
+const handlesubmit =async(e)=>{
+    e.preventDefault();
+    console.log(email)
+    console.log(password);
+    try {
+      const response = await axios.post("http://localhost:3000/login", { email, password });
+      const val = response.data.value;
+      const userName = response.data.name;
+
+      switch (val) {
+        case 0:
+         console.log("error", "Email and Password are required");
+          break;
+        
+        case 1:
+          console.log("invalid password");
+          break;
+         case 3:
+            console.log("internal error");
+         break;
+        case 2:
+          console.log("success", `Welcome, ${userName}! Login successful.`);
+          if (response.data.token) {
+            localStorage.setItem('authToken', response.data.token);
+            console.log("authtoken stored")
+            setTimeout(() => {
+              navigate('/', { state: { userName } });
+            }, 500);
+          } else {
+            console.log("error", "Login failed. Token missing.");
+          }
+          break;
+        default:
+          console.log("error", "An undefined error occurred");
+          break;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+ }
+    return ( <><form onSubmit={handlesubmit}>
     <div className="login-title">
     <div class="unified-login ">
     <h1 class="login-box">Login</h1>
@@ -27,7 +67,8 @@ const [password,setPassword]=useState("")
    />
     <br/>
     <button>submit</button>
-    </div></> );
+    </div>
+    </form></> );
 }
 
 export default Login ;

@@ -1,27 +1,39 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "../componentcss/Navbar.css";
 
 function Navbar() {
-  const [active, setActive] = useState("/");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [activePath, setActivePath] = useState("/");
+  const location = useLocation();
+
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    setIsLoggedIn(!!token); // Update login state based on token existence
+    setActivePath(location.pathname); // Update active path
+  }, [location]);
+
+  // Define navigation items based on login status
+  const navItems = isLoggedIn
+    ? [
+        { name: "Home", path: "/" },
+        { name: "Profile", path: "/profile" },
+        {name:"timer",path:"/timer"}
+      ]
+    : [
+        { name: "Login", path: "/login" },
+        { name: "Sign In", path: "/signin" },
+      ];
 
   return (
     <nav className="navbar">
-      {/* Logo */}
-      <div className="logo">virtual room</div>
-
-      {/* Menu Items */}
+      <div className="logo">Virtual Room</div>
       <div className="menu">
-        {[
-          { name: "home", path: "/" },
-          { name: "login", path: "/login" },
-          { name: "signin", path: "/signin" },
-        ].map((item) => (
+        {navItems.map((item) => (
           <Link
             key={item.path}
             to={item.path}
-            onClick={() => setActive(item.path)}
-            className={`menu-item ${active === item.path ? "active" : ""}`}
+            className={`menu-item ${activePath === item.path ? "active" : ""}`}
           >
             {item.name}
           </Link>

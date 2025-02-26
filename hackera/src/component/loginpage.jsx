@@ -34,6 +34,7 @@ const handlesubmit =async(e)=>{
           if (response.data.token) {
             localStorage.setItem('authToken', response.data.token);
             console.log("authtoken stored")
+            window.dispatchEvent(new Event("authChange"));
             setTimeout(() => {
               navigate('/', { state: { userName } });
             }, 500);

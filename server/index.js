@@ -1,3 +1,7 @@
+
+const express=require("express");
+const login=require("./component/login")
+const signin=require("./component/signin")
 const express = require("express");
 require("dotenv").config();
 const mongoose = require("mongoose");
@@ -15,16 +19,21 @@ const io = socketIo(server, { cors: { origin: "*" } });
 const PORT = process.env.PORT || 3000;
 const connection = process.env.mongoDB;
 
+
 mongoose.connect(connection)
     .then(() => console.log("✅ MongoDB connected successfully"))
     .catch((err) => console.error("❌ Error in connecting MongoDB:", err));
 
 app.use(express.json());
 app.use(cors({
-    origin: "http://localhost:5173",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-}));
+
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST' ,'PUT','DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}))
+
+app.use("/login",login);
+
 
 // Initialize Mediasoup Worker
 startMediasoup().then(() => console.log("🚀 Mediasoup Started"));
@@ -64,3 +73,4 @@ io.on("connection", (socket) => {
 server.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
 });
+

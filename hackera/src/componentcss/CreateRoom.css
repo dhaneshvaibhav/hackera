@@ -1,0 +1,95 @@
+/* Pop-up background */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Pop-up box */
+  .popup-box {
+    background: white;
+    padding: 20px;
+    width: 350px;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Input field */
+  input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Room type selection container */
+  .room-type-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 15px 0;
+  }
+  
+  /* Room type options (bubbles) */
+  .room-option {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .room-option:hover {
+    background: #f1f1f1;
+  }
+  
+  /* Selected option styling */
+  .room-option.selected {
+    background: #ff3366;
+    color: white;
+    border-color: #ff3366;
+    font-weight: bold;
+  }
+  
+  /* Buttons container */
+  .popup-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+  }
+  
+  /* Create and close buttons */
+  .create-btn {
+    background: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .close-btn {
+    background: #dc3545;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .create-btn:hover {
+    background: #218838;
+  }
+  
+  .close-btn:hover {
+    background: #c82333;
+  }
+  

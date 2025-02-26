@@ -1,17 +1,25 @@
 import React, { useState } from "react";
 
 function Signin() {
-    const [user ,setUser]=useState("")
-    const [rep ,setrep]=useState("")
-    const [password ,setPasswprd]=useState("")
-    return (  <div className="login-box">
+  const [name ,setName]=useState("")
+  const [email,setEmail]=useState("")
+  const [retypePassword ,setRetypePassword]=useState("")
+  const [password ,setPassword]=useState("")
+    return (  
+    <div className="login-box">
         <h1 className="login-title">Create An Account:</h1>
-  
+        <p>Username:</p>
+        <input
+          type="text"
+          value={name}
+          placeholder="name"
+          onChange={(e) => setName(e.target.value)}/>
+
         <p>Email:</p>
         <input
           type="text"
-          value={user}
-          placeholder="username or email"
+          value={email}
+          placeholder="email"
           onChange={(e) => setUser(e.target.value)}
         />
   
@@ -20,15 +28,15 @@ function Signin() {
           type="password"
           value={password}
           placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => setPasswprd(e.target.value)}
         />
   
         <p>Repeat password:</p>
         <input
           type="password"
-          value={rep}
+          value={retypePassword}
           placeholder="repeat password"
-          onChange={(e) => setRep(e.target.value)}
+          onChange={(e) => setrep(e.target.value)}
         />
   
         <button>Sign In</button>

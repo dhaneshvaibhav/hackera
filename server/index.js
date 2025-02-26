@@ -1,4 +1,5 @@
 const express=require("express");
+require('dotenv').config();
 
 const app=express();
 const PORT=process.env.port||3000;
@@ -15,5 +16,5 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }))
 app.listen(PORT , ()=>{
-    console.log(`the app is listening to na server`);
+    console.log(`the app is listening to ${PORT} server`);
 })

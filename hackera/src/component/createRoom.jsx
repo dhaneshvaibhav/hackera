@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import "../componentcss/createRoom.css";
 
 const CreateRoom = ({ onClose }) => {
     const [roomName, setRoomName] = useState("");
     const [roomType, setRoomType] = useState("solo");
     const [selectedFile, setSelectedFile] = useState(null);
+    const navigate = useNavigate(); // ✅ Hook to navigate
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -15,12 +17,27 @@ const CreateRoom = ({ onClose }) => {
         }
     };
 
+    const handleCreateRoom = () => {
+        if (!roomName) {
+            alert("Please enter a room name.");
+            return;
+        }
+
+        // Simulate Room Creation (You can replace this with an API call)
+        console.log("Room Created:", { roomName, roomType, selectedFile });
+
+        // ✅ Navigate based on room type
+        if (roomType === "solo") {
+            navigate("/timer"); // Go to Timer Page
+        } else {
+            alert("group room is creatd")
+        }
+    };
+
     return (
         <div className="popup-overlay">
             <div className="popup-box">
-                {/* Close button as 'X' */}
                 <span className="close-button" onClick={onClose}>&times;</span>
-
                 <h2>Create Room</h2>
 
                 <input 
@@ -45,7 +62,6 @@ const CreateRoom = ({ onClose }) => {
                     </div>
                 </div>
 
-                {/* File Upload Section */}
                 <div className="file-upload">
                     <label className="upload-label">
                         Upload PDF:
@@ -54,7 +70,10 @@ const CreateRoom = ({ onClose }) => {
                     {selectedFile && <p>Selected File: {selectedFile.name}</p>}
                 </div>
 
-                <button className="create-room-button">Create</button>
+                {/* ✅ Call handleCreateRoom when clicking Create */}
+                <button className="create-room-button" onClick={handleCreateRoom}>
+                    Create
+                </button>
             </div>
         </div>
     );

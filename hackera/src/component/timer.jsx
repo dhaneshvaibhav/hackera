@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import "../componentcss/timer.css";
 
 const Timer = () => {
   const [customMinutes, setCustomMinutes] = useState(25);
   const [timeLeft, setTimeLeft] = useState(customMinutes * 60);
   const [isRunning, setIsRunning] = useState(false);
+  const navigate = useNavigate(); // ✅ Hook for navigation
 
   useEffect(() => {
     let timer;
@@ -27,7 +29,7 @@ const Timer = () => {
   const handleCustomTimeChange = (e) => {
     const minutes = Math.max(1, parseInt(e.target.value) || 0);
     setCustomMinutes(minutes);
-    if (!isRunning) setTimeLeft(minutes * 60); // Update only when not running
+    if (!isRunning) setTimeLeft(minutes * 60);
   };
 
   const handlePomodoroComplete = async () => {
@@ -43,12 +45,16 @@ const Timer = () => {
 
       const data = await response.json();
       if (data.success) {
-        // Broadcast event to refresh Profile.js
         window.dispatchEvent(new Event("streakUpdated"));
       }
     } catch (error) {
       console.error("Error updating streak:", error);
     }
+  };
+
+  // ✅ Navigate to Home Page when ending room
+  const handleEndRoom = () => {
+    navigate("/");
   };
 
   return (
@@ -70,6 +76,11 @@ const Timer = () => {
 
       <button onClick={handleStartPause}>{isRunning ? "Pause" : "Start"}</button>
       <button onClick={handleReset}>Reset</button>
+
+      {/* ✅ "End Room" Button (Navigates to Home Page) */}
+      <button onClick={handleEndRoom} className="end-room-button">
+        End Room
+      </button>
     </div>
   );
 };

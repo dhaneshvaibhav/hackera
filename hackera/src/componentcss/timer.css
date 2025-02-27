@@ -22,3 +22,31 @@
 .timer-container button:hover {
     background-color: #ff0055;
 }
+.timer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Make the container take full height */
+    text-align: center;
+  }
+  
+ .end-room-button {
+    position: absolute;
+    bottom: 20px; /* Pushes button to bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .end-room-button:hover {
+    background-color: #cc0000;
+  }
+  

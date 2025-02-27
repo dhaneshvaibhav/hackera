@@ -164,7 +164,7 @@ module.exports = (io) => {
                 const consumer = await transport.consume({
                     producerId,
                     rtpCapabilities,
-                    paused: false, // Start paused
+                    paused: false, 
                 });
         
                 room.consumers.set(consumer.id, consumer);

@@ -34,12 +34,12 @@ const Home = () => {
 
         socket.emit("get-rtp-capabilities", { roomId: code });
         socket.once("rtp-capabilities", async (capabilities) => {
-            console.log("the capabilities i got to frontend is", capabilities);
             if (!capabilities) {
                 console.error("❌ Invalid RTP Capabilities");
                 return;
             }
 
+            console.log("📡 RTP Capabilities Received:", capabilities);
             try {
                 const newDevice = new Device();
                 await newDevice.load({ routerRtpCapabilities: capabilities });
@@ -51,12 +51,12 @@ const Home = () => {
                     return;
                 }
 
+                // Create Send Transport
                 socket.emit("create-transport", { roomId: code });
                 socket.once("transport-created", async (data) => {
                     console.log("🚀 Send Transport Created:", data);
-
                     const sendTransport = newDevice.createSendTransport(data);
-
+                    
                     sendTransport.on("connect", ({ dtlsParameters }, callback) => {
                         socket.emit("connect-transport", { roomId: code, transportId: data.id, dtlsParameters });
                         socket.once("transport-connected", callback);
@@ -81,6 +81,7 @@ const Home = () => {
                     setSendTransport(sendTransport);
                 });
 
+                // Create Receive Transport
                 socket.emit("create-recv-transport", { roomId: code });
                 socket.once("recv-transport-created", async (data) => {
                     console.log("🚀 Receive Transport Created:", data);
@@ -97,40 +98,41 @@ const Home = () => {
                 console.error("❌ Error initializing Mediasoup device:", error);
             }
         });
-
-        socket.once("error", (message) => {
-            console.error("❌ Server Error:", message);
-            alert("Error: " + message);
-        });
     };
 
-    socket?.on("new-producer", ({ producerId }) => {
-        console.log("📡 New Producer Detected:", producerId);
+    useEffect(() => {
+        if (!socket || !device || !recvTransport) return;
         
-        if (!producerId) {
-            console.error("❌ Received undefined producerId");
-            return;
-        }
+        socket.on("new-producer", ({ producerId }) => {
+            console.log("📡 New Producer Detected:", producerId);
 
-        socket.emit("consume", { roomId: code, producerId, rtpCapabilities: device.rtpCapabilities });
+            if (!producerId) {
+                console.error("❌ Received undefined producerId");
+                return;
+            }
 
-        socket.once("consumer-created", async ({ id, producerId, kind, rtpParameters }) => {
-            console.log(`📡 Consumer Created! ID: ${id}, Producer: ${producerId}, Kind: ${kind}`);
-            const consumer = await recvTransport.consume({ id, producerId, kind, rtpParameters });
-            
-            const remoteStream = new MediaStream();
-            remoteStream.addTrack(consumer.track);
-            
-            const element = document.createElement(kind === "video" ? "video" : "audio");
-            element.id = `remote-${kind}-${producerId}`;
-            element.autoplay = true;
-            if (kind === "video") element.playsInline = true;
-            element.srcObject = remoteStream;
-            document.body.appendChild(element);
+            console.log("🔄 Requesting consumer...");
+            socket.emit("consume", { roomId: code, producerId, rtpCapabilities: device.rtpCapabilities });
+            console.log(`🚀 Emitting consume event for producer: ${producerId}`);
 
-            console.log("✅ Remote stream added to DOM for", producerId);
+            socket.once("consumer-created", async ({ id, producerId, kind, rtpParameters }) => {
+                console.log(`📡 Consumer Created! ID: ${id}, Producer: ${producerId}, Kind: ${kind}`);
+                const consumer = await recvTransport.consume({ id, producerId, kind, rtpParameters });
+                
+                const remoteStream = new MediaStream();
+                remoteStream.addTrack(consumer.track);
+                
+                const element = document.createElement(kind === "video" ? "video" : "audio");
+                element.id = `remote-${kind}-${producerId}`;
+                element.autoplay = true;
+                if (kind === "video") element.playsInline = true;
+                element.srcObject = remoteStream;
+                document.body.appendChild(element);
+
+                console.log("✅ Remote stream added to DOM for", producerId);
+            });
         });
-    });
+    }, [socket, device, recvTransport]);
 
     return (
         <div className="container">

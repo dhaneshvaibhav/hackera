@@ -2,8 +2,8 @@ const express = require("express");
 const { nanoid } = require("nanoid");
 const multer = require("multer");
 const Room = require("../models/Rooms");
-const { getRouterRtpCapabilities } = require("../utils/mediasoupSetup");
-const { uploadFileToCloudinary } = require("../utils/cloudinaryHelper"); // Cloudinary Upload Helper
+const { getRouterRtpCapabilities, createConsumer } = require("../utils/mediasoupSetup");
+const { uploadFileToCloudinary } = require("../utils/cloudinaryHelper");
 
 const router = express.Router();
 
@@ -49,7 +49,10 @@ router.post("/", upload.single("pdfFile"), async (req, res) => {
 
         let rtpCapabilities;
         try {
-            rtpCapabilities = await getRouterRtpCapabilities();
+            rtpCapabilities = await getRouterRtpCapabilities(roomId);
+            if (!rtpCapabilities) {
+                throw new Error("Failed to retrieve RTP Capabilities");
+            }
         } catch (rtpError) {
             console.error("❌ Error fetching RTP Capabilities:", rtpError);
             return res.status(500).json({ error: "Failed to retrieve RTP Capabilities" });
@@ -58,6 +61,28 @@ router.post("/", upload.single("pdfFile"), async (req, res) => {
         res.status(201).json({ roomId, name, type, pdfUrl, rtpCapabilities });
     } catch (error) {
         console.error("❌ Error creating room:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
+// Create Consumer API
+router.post("/createConsumer", async (req, res) => {
+    try {
+        const { consumerTransportId, producerId, rtpCapabilities } = req.body;
+
+        if (!consumerTransportId || !producerId || !rtpCapabilities) {
+            return res.status(400).json({ error: "Missing required parameters" });
+        }
+
+        const consumerData = await createConsumer(consumerTransportId, producerId, rtpCapabilities);
+
+        if (!consumerData) {
+            return res.status(400).json({ error: "Failed to create consumer" });
+        }
+
+        res.status(200).json(consumerData);
+    } catch (error) {
+        console.error("❌ Error creating consumer:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });

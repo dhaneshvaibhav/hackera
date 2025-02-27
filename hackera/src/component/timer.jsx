@@ -1,6 +1,7 @@
-import React, { useState, useEffect } 
+import React, { useState, useEffect } from "react";
+import "../componentcss/timer.css";
 
-const Timer= () => {
+const Timer = () => {
   const [customMinutes, setCustomMinutes] = useState(25);
   const [timeLeft, setTimeLeft] = useState(customMinutes * 60);
   const [isRunning, setIsRunning] = useState(false);
@@ -26,7 +27,7 @@ const Timer= () => {
   const handleCustomTimeChange = (e) => {
     const minutes = Math.max(1, parseInt(e.target.value) || 0);
     setCustomMinutes(minutes);
-    setTimeLeft(minutes * 60);
+    if (!isRunning) setTimeLeft(minutes * 60); // Update only when not running
   };
 
   const handlePomodoroComplete = async () => {
@@ -51,7 +52,7 @@ const Timer= () => {
   };
 
   return (
-    <div className="pomodoro">
+    <div className="timer-container">
       <h2>Pomodoro Timer</h2>
 
       <div>
@@ -71,44 +72,6 @@ const Timer= () => {
       <button onClick={handleReset}>Reset</button>
     </div>
   );
-=======
-import "../componentcss/timer.css"; 
-
-const Timer = () => {
-    const [time, setTime] = useState(0);
-    const [isRunning, setIsRunning] = useState(false);
-
-    useEffect(() => {
-        let interval;
-        if (isRunning) {
-            interval = setInterval(() => {
-                setTime((prevTime) => prevTime + 1);
-            }, 1000);
-        } else {
-            clearInterval(interval);
-        }
-        return () => clearInterval(interval);
-    }, [isRunning]);
-
-    const handleStartStop = () => {
-        setIsRunning(!isRunning);
-    };
-
-    const handleReset = () => {
-        setIsRunning(false);
-        setTime(0);
-    };
-
-    return (
-        <div className="timer-container">
-            <h2>⏳ Timer: {time}s</h2>
-            <button onClick={handleStartStop}>
-                {isRunning ? "Pause" : "Start"}
-            </button>
-            <button onClick={handleReset}>Reset</button>
-        </div>
-    );
-
 };
 
 export default Timer;

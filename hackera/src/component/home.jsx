@@ -56,7 +56,7 @@ const Home = () => {
                 socket.once("transport-created", async (data) => {
                     console.log("🚀 Send Transport Created:", data);
                     const sendTransport = newDevice.createSendTransport(data);
-                    
+
                     sendTransport.on("connect", ({ dtlsParameters }, callback) => {
                         socket.emit("connect-transport", { roomId: code, transportId: data.id, dtlsParameters });
                         socket.once("transport-connected", callback);
@@ -101,13 +101,19 @@ const Home = () => {
     };
 
     useEffect(() => {
-        if (!socket || !device || !recvTransport) return;
-        
-        socket.on("new-producer", ({ producerId }) => {
+        if (!socket) return;
+
+        const handleNewProducer = async ({ producerId }) => {
             console.log("📡 New Producer Detected:", producerId);
 
             if (!producerId) {
                 console.error("❌ Received undefined producerId");
+                return;
+            }
+
+            if (!device || !recvTransport) {
+                console.warn("⚠️ Device or Receive Transport not ready yet. Retrying in 500ms...");
+                setTimeout(() => handleNewProducer({ producerId }), 500);
                 return;
             }
 
@@ -117,11 +123,15 @@ const Home = () => {
 
             socket.once("consumer-created", async ({ id, producerId, kind, rtpParameters }) => {
                 console.log(`📡 Consumer Created! ID: ${id}, Producer: ${producerId}, Kind: ${kind}`);
+
                 const consumer = await recvTransport.consume({ id, producerId, kind, rtpParameters });
-                
+                console.log("✅ Consumer successfully created!", consumer);
+
                 const remoteStream = new MediaStream();
                 remoteStream.addTrack(consumer.track);
-                
+
+                console.log(`📹 Adding ${kind} track to remote stream...`);
+
                 const element = document.createElement(kind === "video" ? "video" : "audio");
                 element.id = `remote-${kind}-${producerId}`;
                 element.autoplay = true;
@@ -131,7 +141,13 @@ const Home = () => {
 
                 console.log("✅ Remote stream added to DOM for", producerId);
             });
-        });
+        };
+
+        socket.on("new-producer", handleNewProducer);
+
+        return () => {
+            socket.off("new-producer", handleNewProducer);
+        };
     }, [socket, device, recvTransport]);
 
     return (

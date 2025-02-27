@@ -214,6 +214,7 @@ module.exports = (io) => {
                 socket.emit("error", "Recv transport creation failed");
             }
         });
+        
         socket.on("disconnect", async () => {
             try {
                 console.log(`❌ User Disconnected: ${socket.id}`);

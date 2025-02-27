@@ -4,6 +4,9 @@ import Login from './component/loginpage';
 import Signin from './component/signin';
 import Navbar from './component/navbar';
 import Home from './component/home';
+import Profile from './component/profile';
+import Explore from './component/explore';
+import PomodoroTimer from './component/timer';
 
 
 
@@ -30,6 +33,32 @@ function App() {
       ),
     },
     {
+      path: '/explore',
+      element: (
+        <>
+          <Navbar />
+          <Explore />
+        </>
+      ),
+    },
+    {
+      path: '/timer',
+      element: (
+        <>
+          <Navbar />
+          <PomodoroTimer />
+        </>
+      ),
+    },
+    {
+      path: '/profile',
+      element: (
+        <>
+          <Navbar />
+          <Profile />
+        </>
+      ),
+    },{
       path: '/login',
       element: (
         <>
@@ -37,7 +66,8 @@ function App() {
           <Login />
         </>
       ),
-    }])
+    }
+  ])
 
   return (
     <>

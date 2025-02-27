@@ -18,7 +18,7 @@ function Navbar() {
     ? [
         { name: "Home", path: "/" },
         { name: "Profile", path: "/profile" },
-        {name:"timer",path:"/timer"}
+        {name:"Explore",path:"/explore"}
       ]
     : [
         { name: "Login", path: "/login" },

@@ -1,0 +1,113 @@
+$face-count: 48;
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Helvetica', sans-serif;
+}
+
+.egg-container {
+  transform: scale(.75);
+  transition: transform .2s;
+
+  &.active {
+    transform: scale(1);
+  }
+}
+
+.egg {
+  border-radius: 100% 100% 76% 76% / 118% 118% 80% 80%;
+  cursor: pointer;
+  background-color: #f4f4f4;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  width: 150px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+
+  &.ringing {
+    animation: ring .12s infinite;
+  }
+}
+
+@keyframes ring {
+  0%, 50%, 100% { transform: rotate(0); }
+  25% { transform: rotate(5deg); }
+  75% { transform: rotate(-5deg); }
+}
+
+.egg-top {
+  width: 90px;
+  height: 90px;
+  background: linear-gradient(to right, #e6e6e6, #fff, #e6e6e6);
+  border-radius: 50%;
+}
+
+.egg-center {
+  height: 6px;
+  width: 80%;
+  background-color: #d8d8d8;
+}
+
+.egg-bottom {
+  width: 90px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #f4f4f4, #d8d8d8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.time-arrow {
+  width: 20px;
+  height: 14px;
+  background-color: #d15705;
+  clip-path: polygon(50% 0, 0% 100%, 100% 100%);
+  margin-top: 8px;
+}
+
+.time-container {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.timer-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.timer-button {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+  
+  &:active:not(:disabled) {
+    transform: scale(.92);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  &.stop {
+    background: linear-gradient(to bottom, #d53f0b, #b00000);
+  }
+
+  &:not(.stop) {
+    background: linear-gradient(to bottom, #84b709, #46a100);
+  }
+}

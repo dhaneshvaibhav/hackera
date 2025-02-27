@@ -5,6 +5,7 @@ import Signin from './component/signin';
 import Navbar from './component/navbar';
 import Home from './component/home';
 import Profile from './component/profile';
+import Explore from './component/explore';
 
 
 
@@ -27,6 +28,15 @@ function App() {
         <>
           <Navbar />
           <Signin />
+        </>
+      ),
+    },
+    {
+      path: '/explore',
+      element: (
+        <>
+          <Navbar />
+          <Explore />
         </>
       ),
     },

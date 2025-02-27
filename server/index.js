@@ -1,7 +1,7 @@
 const http = require("http");
 const socketIo = require("socket.io");
 
-
+const express=require("express")
 const getData=require("../server/components/getData")
 
 const { startMediasoup } = require("./utils/mediasoupSetup");
@@ -13,9 +13,11 @@ const io = socketIo(server, { cors: { origin: "*" } });
 
 const PORT = process.env.PORT || 3000;
 
+app.use(express.json()); // ✅ This enables JSON request body parsing
 
-app.use("/getData",getData);
-
+app.use("/getDataProfile",getData);
+app.use("/joinRoom",require("../server/components/joinRoom"))
+app.use("/gettingData",require("../server/components/gettingData"))
 
 // Routes
 app.use("/login", require("./components/login"));

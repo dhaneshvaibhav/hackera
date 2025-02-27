@@ -34,7 +34,7 @@ function Profile() {
     const fetchUserData = async () => {
       try {
         const response = await axios.post(
-          "http://localhost:3000/getData",
+          "http://localhost:3000/getDataProfile",
           {},
           {
             headers: { Authorization: `Bearer ${token}` }, // Send token in Authorization header

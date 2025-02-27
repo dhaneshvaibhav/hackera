@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json()); // ✅ This enables JSON request body parsing
 
-app.use("/getDataProfile",getData);
+app.use("/getData",getData);
 app.use("/joinRoom",require("../server/components/joinRoom"))
 app.use("/gettingData",require("../server/components/gettingData"))
 

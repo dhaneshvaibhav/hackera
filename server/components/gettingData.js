@@ -1,3 +1,4 @@
+//getting rooms data
 const express = require('express');
 const mongoose = require('mongoose');
 const Room = require('../models/Rooms'); // Assuming you have a Room model

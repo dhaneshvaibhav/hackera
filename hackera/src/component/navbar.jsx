@@ -18,7 +18,8 @@ function Navbar() {
     ? [
         { name: "Home", path: "/" },
         { name: "Profile", path: "/profile" },
-        {name:"Explore",path:"/explore"}
+        {name:"Explore",path:"/explore"},
+        {name:"timer",path:"/timer"}
       ]
     : [
         { name: "Login", path: "/login" },

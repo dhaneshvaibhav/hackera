@@ -6,7 +6,7 @@ import Navbar from './component/navbar';
 import Home from './component/home';
 import Profile from './component/profile';
 import Explore from './component/explore';
-import PomodoroTimer from './component/timer';
+import Timer from './component/timer';
 
 
 
@@ -45,8 +45,8 @@ function App() {
       path: '/timer',
       element: (
         <>
-          <Navbar />
-          <PomodoroTimer />
+          
+          <Timer />
         </>
       ),
     },

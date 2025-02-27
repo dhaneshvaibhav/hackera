@@ -1,52 +1,191 @@
+/* Night Sky Background */
 .timer-container {
     text-align: center;
-    margin-top: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 40px #ffffe0;
 }
 
-.timer-container h2 {
-    font-size: 20px;
-    color: #ff3366;
+.timer-container h1 {
+    font-size: 3rem;
+    margin: 10px 0;
 }
 
-.timer-container button {
-    margin: 5px;
-    padding: 8px 16px;
+button {
+    background: #ffcc00;
     border: none;
-    background-color: #ff3366;
-    color: white;
-    font-size: 14px;
+    padding: 10px 15px;
+    margin: 10px;
     border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff9900;
+}
+
+/* Chatbot UI */
+.chatbot-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 2rem;
     cursor: pointer;
 }
 
-.timer-container button:hover {
-    background-color: #ff0055;
+.chat-window {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 10px;
+    overflow: hidden;
 }
-.timer-container {
+
+.chat-header {
+    background: #333;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chat-body {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+.chat-input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+}
+
+.night-sky {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: #020d18;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Make the container take full height */
-    text-align: center;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+/* Moon */
+.moon {
+    position: absolute;
+    top: 10%;
+    left: 75%;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, #fff 30%, #f5f3ce 70%);
+    border-radius: 50%;
+    box-shadow: 0 0 30px #fff;
+    animation: moon-glow 3s infinite alternate;
+}
+
+@keyframes moon-glow {
+    0% { box-shadow: 0 0 20px #fff; }
+    100% { box-shadow: 0 0 40px #ffffcc; }
+}
+
+/* Stars */
+.star {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 0 8px white;
+    animation: twinkle linear infinite alternate;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.3; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Shooting Stars */
+.shooting-star {
+    position: absolute;
+    width: 2px;
+    height: 80px;
+    background: linear-gradient(transparent, white, white, transparent);
+    border-radius: 50%;
+    opacity: 0;
+    animation: shooting 3s linear infinite;
+}
+
+@keyframes shooting {
+    0% { opacity: 0; transform: translate(0, 0) rotate(45deg) scale(0.5); }
+    10% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-300px, 300px) rotate(45deg) scale(1); }
+}
+
+/* Timer UI */
+.todo-icon {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: transform 0.2s;
   }
   
- .end-room-button {
-    position: absolute;
-    bottom: 20px; /* Pushes button to bottom */
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #ff4d4d;
+  .todo-icon:hover {
+    transform: scale(1.1);
+  }
+  
+  .todo-window {
+    position: fixed;
+    bottom: 60px;
+    left: 20px;
+    width: 250px;
+    background: rgba(0, 0, 0, 0.8);
     color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  }
+  
+  .todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .todo-window ul {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+  }
+  
+  .todo-window li {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+  }
+  
+  .todo-window input {
+    width: 100%;
+    padding: 5px;
+    margin-top: 10px;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .end-room-button:hover {
-    background-color: #cc0000;
   }
   

@@ -1,28 +1,44 @@
 const http = require("http");
 const socketIo = require("socket.io");
+const express = require("express");
+const dotenv = require("dotenv");
 
-const express=require("express")
-const getData=require("../server/components/getData")
-
+// Import utilities and components
 const { startMediasoup } = require("./utils/mediasoupSetup");
 const app = require("./app");
+const chatWithAI = require("./components/chatGptBot").chatWithAI; // ✅ Import chatbot function
 
+dotenv.config();
 
 const server = http.createServer(app);
 const io = socketIo(server, { cors: { origin: "*" } });
 
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json()); // ✅ This enables JSON request body parsing
-
-app.use("/getData",getData);
-app.use("/joinRoom",require("../server/components/joinRoom"))
-app.use("/gettingData",require("../server/components/gettingData"))
+// Middleware
+app.use(express.json()); // ✅ Enable JSON request body parsing
 
 // Routes
+app.use("/getData", require("./components/getData"));
+app.use("/joinRoom", require("./components/joinRoom"));
+app.use("/gettingData", require("./components/gettingData"));
 app.use("/login", require("./components/login"));
 app.use("/signin", require("./components/signin"));
 app.use("/create-room", require("./components/createRoom"));
+
+// ✅ Chatbot Route (AI Chat)
+app.post("/chatBot/chat", async (req, res) => {
+    try {
+        const userMessage = req.body.message;
+        if (!userMessage) return res.status(400).json({ error: "Message is required" });
+
+        const botReply = await chatWithAI(userMessage); // ✅ Call Gemini AI chatbot function
+        res.json({ reply: botReply });
+    } catch (error) {
+        console.error("Chatbot Error:", error);
+        res.status(500).json({ error: "Chatbot service unavailable" });
+    }
+});
 
 // Initialize Mediasoup Worker
 startMediasoup()

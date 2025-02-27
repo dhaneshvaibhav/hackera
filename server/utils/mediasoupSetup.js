@@ -14,8 +14,15 @@ async function startMediasoup() {
     console.log("✅ Mediasoup Router Initialized");
 }
 
-async function getRouterRtpCapabilities() {
-    return router.rtpCapabilities;
+function getRouter() {
+    if (!router) {
+        throw new Error("❌ Mediasoup Router not initialized. Call startMediasoup() first.");
+    }
+    return router;
 }
 
-module.exports = { startMediasoup, getRouterRtpCapabilities, router };
+async function getRouterRtpCapabilities() {
+    return getRouter().rtpCapabilities;
+}
+
+module.exports = { startMediasoup, getRouter, getRouterRtpCapabilities };

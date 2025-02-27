@@ -3,15 +3,29 @@ const { nanoid } = require("nanoid");
 const multer = require("multer");
 const Room = require("../models/Rooms");
 const { getRouterRtpCapabilities } = require("../utils/mediasoupSetup");
-const { uploadFileToCloudinary } = require("../utils/cloudinaryHelper"); // Helper function for Cloudinary upload
+const { uploadFileToCloudinary } = require("../utils/cloudinaryHelper"); // Cloudinary Upload Helper
 
 const router = express.Router();
-const upload = multer({ storage: multer.memoryStorage() }); // Store in memory before uploading
 
+// Multer Configuration: Store files in memory before Cloudinary upload
+const storage = multer.memoryStorage();
+const upload = multer({
+    storage,
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype === "application/pdf") {
+            cb(null, true);
+        } else {
+            cb(new Error("Only PDF files are allowed!"), false);
+        }
+    },
+    limits: { fileSize: 5 * 1024 * 1024 } // 5MB file size limit
+});
+
+// Create Room API
 router.post("/", upload.single("pdfFile"), async (req, res) => {
     try {
         const { name, type } = req.body;
-        
+
         if (!name || !type || !["solo", "group"].includes(type)) {
             return res.status(400).json({ error: "Invalid input data" });
         }

@@ -4,6 +4,16 @@ import "../componentcss/createRoom.css";
 const CreateRoom = ({ onClose }) => {
     const [roomName, setRoomName] = useState("");
     const [roomType, setRoomType] = useState("solo");
+    const [selectedFile, setSelectedFile] = useState(null);
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file && file.type === "application/pdf") {
+            setSelectedFile(file);
+        } else {
+            alert("Please select a valid PDF file.");
+        }
+    };
 
     return (
         <div className="popup-overlay">
@@ -33,6 +43,15 @@ const CreateRoom = ({ onClose }) => {
                     >
                         Group
                     </div>
+                </div>
+
+                {/* File Upload Section */}
+                <div className="file-upload">
+                    <label className="upload-label">
+                        Upload PDF:
+                        <input type="file" accept="application/pdf" onChange={handleFileChange} />
+                    </label>
+                    {selectedFile && <p>Selected File: {selectedFile.name}</p>}
                 </div>
 
                 <button className="create-room-button">Create</button>
